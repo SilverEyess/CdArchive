@@ -96,6 +96,18 @@ public class LibraryComponents
         return myJTable;
     }
 
+    public static JComboBox LocateAJComboBox(JFrame myJFrame, ActionListener myActnLstnr, SpringLayout myJComboBoxLayout, String[] data, int x, int y, int w, int h)
+    {
+        JComboBox myJComboBox = new JComboBox(data);
+        myJFrame.add(myJComboBox);
+        myJComboBox.addActionListener(myActnLstnr);
+        myJComboBoxLayout.putConstraint(SpringLayout.WEST, myJComboBox, x, SpringLayout.WEST, myJFrame);
+        myJComboBoxLayout.putConstraint(SpringLayout.NORTH, myJComboBox, y, SpringLayout.NORTH, myJFrame);
+        myJComboBox.setEditable(true);
+        myJComboBox.setPreferredSize(new Dimension(w, h));
+        return myJComboBox;
+    }
+
 
     /** --------------------------------------------------------
      * Purpose: Locate a single JTextArea within a JFrame.

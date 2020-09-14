@@ -4,9 +4,9 @@ import javax.swing.*;
 import javax.swing.table.AbstractTableModel;
 import java.awt.*;
 import java.awt.event.*;
-import java.io.BufferedReader;
-import java.io.FileReader;
 import java.util.ArrayList;
+import java.net.*;
+import java.io.*;
 
 public class CdArchive extends JFrame implements ActionListener, KeyListener {
 
@@ -14,7 +14,7 @@ public class CdArchive extends JFrame implements ActionListener, KeyListener {
 
     JTextField txtSearch, txtTitle, txtAuthor, txtSection, txtX, txtY, txtBarcode, txtSortSection;
     JLabel lblSearch, lblSort, lblDisplayBinaryTree, lblHashMap, lblTitle, lblAuthor, lblSection, lblX, lblY,
-            lblBarcode, lblDescription, lblSortSection, lblActionRequest, lblLog;
+            lblBarcode, lblDescription, lblSortSection, lblActionRequest, lblLog, lblMessage;
     JButton btnSearch, btnSortByTitle, btnSortByAuthor, btnSortByBarcode, btnLog, btnPreorder, btnInOrder, btnPostOrder,
             btnGraphical, btnSave, btnDisplay, btnNewItem, btnSaveUpdate, btnRetrieve, btnRemove, btnReturn, btnAddToCollection,
             btnRandomSort, btnMostlySort, btnReverseSort, btnExit;
@@ -26,6 +26,13 @@ public class CdArchive extends JFrame implements ActionListener, KeyListener {
     MyModel wordModel;
     String dataFile = "Sample_CD_Archive_Data.txt";
     ArrayList<Object[]> dataValues = new ArrayList();
+
+    private Socket socket = null;
+    private DataInputStream console = null;
+    private DataOutputStream streamOut = null;
+    private ChatClientThread1 client = null;
+    private String serverName = "localhost";
+    private int serverPort = 4444;
 
 
     //</editor-fold>
@@ -107,6 +114,7 @@ public class CdArchive extends JFrame implements ActionListener, KeyListener {
         lblDescription= LibraryComponents.LocateAJLabel(this, layout, "Description:", 900, 155);
         lblActionRequest = LibraryComponents.LocateAJLabel(this, layout, "Automation Action Request for the item above:", 900, 235);
         lblSortSection = LibraryComponents.LocateAJLabel(this, layout, "Sort Section:", 920, 320);
+        lblMessage = LibraryComponents.LocateAJLabel(this, layout, "", 250, 505);
     }
 
     private void displayTextBoxes(SpringLayout layout)
@@ -356,6 +364,116 @@ public class CdArchive extends JFrame implements ActionListener, KeyListener {
         }
         String text = dList.toString();
         areaLog.setText(text);
+    }
+    //</editor-fold>
+
+    //<editor-fold desc="Network">
+    public void connect(String serverName, int serverPort)
+    {
+        println("Establishing connection. Please wait ...");
+        try
+        {
+            socket = new Socket(serverName, serverPort);
+            println("Connected: " + socket);
+            open();
+        }
+        catch (UnknownHostException uhe)
+        {
+            println("Host unknown: " + uhe.getMessage());
+        }
+        catch (IOException ioe)
+        {
+            println("Unexpected exception: " + ioe.getMessage());
+        }
+    }
+
+    private void send()
+    {
+        try
+        {
+            //streamOut.writeUTF(txtWord1.getText());
+            streamOut.flush();
+            //txtWord1.setText("");
+        }
+        catch (IOException ioe)
+        {
+            println("Sending error: " + ioe.getMessage());
+            close();
+        }
+    }
+
+    public void handle(String msg)
+    {
+        if (msg.equals(".bye"))
+        {
+            println("Good bye. Press EXIT button to exit ...");
+            close();
+        }
+        else
+        {
+            println(msg);
+
+            // NEW -----------------------------------
+
+            //currentAssocWord++;
+            //wordList[currentAssocWord] = new AssocData(msg);
+            //for (int i = 0; i < currentAssocWord; i++)
+            {
+                //System.out.println("Handle Method: " + i + " - " + wordList[i].words);
+            }
+
+            //----------------------------------------
+
+        }
+    }
+
+    public void open()
+    {
+        try
+        {
+            streamOut = new DataOutputStream(socket.getOutputStream());
+            client = new ChatClientThread1(this, socket);
+        }
+        catch (IOException ioe)
+        {
+            println("Error opening output stream: " + ioe);
+        }
+    }
+
+    public void close()
+    {
+        try
+        {
+            if (streamOut != null)
+            {
+                streamOut.close();
+            }
+            if (socket != null)
+            {
+                socket.close();
+            }
+        }
+        catch (IOException ioe)
+        {
+            println("Error closing ...");
+        }
+        client.close();
+        client.stop();
+    }
+
+    void println(String msg)
+    {
+        //display.appendText(msg + "\n");
+        lblMessage.setText(msg);
+    }
+
+    public void getParameters()
+    {
+//        serverName = getParameter("host");
+//        serverPort = Integer.parseInt(getParameter("port"));
+
+        serverName = "localhost";
+        serverPort = 4444;
     }
     //</editor-fold>
 

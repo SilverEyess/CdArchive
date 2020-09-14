@@ -21,7 +21,7 @@ public class AutomationConsole extends JFrame implements ActionListener, KeyList
     private Socket socket = null;
     private DataInputStream console = null;
     private DataOutputStream streamOut = null;
-    private ChatClientThread2 client2 = null;
+    private AutomationConsoleThread client2 = null;
     private String serverName = "localhost";
     private int serverPort = 4444;
 
@@ -264,7 +264,7 @@ public class AutomationConsole extends JFrame implements ActionListener, KeyList
         try
         {
             streamOut = new DataOutputStream(socket.getOutputStream());
-            client2 = new ChatClientThread2(this, socket);
+            client2 = new AutomationConsoleThread(this, socket);
         }
         catch (IOException ioe)
         {

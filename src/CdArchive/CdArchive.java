@@ -30,7 +30,7 @@ public class CdArchive extends JFrame implements ActionListener, KeyListener {
     private Socket socket = null;
     private DataInputStream console = null;
     private DataOutputStream streamOut = null;
-    private ChatClientThread1 client = null;
+    private CdArchiveThread client = null;
     private String serverName = "localhost";
     private int serverPort = 4444;
 
@@ -432,7 +432,7 @@ public class CdArchive extends JFrame implements ActionListener, KeyListener {
         try
         {
             streamOut = new DataOutputStream(socket.getOutputStream());
-            client = new ChatClientThread1(this, socket);
+            client = new CdArchiveThread(this, socket);
         }
         catch (IOException ioe)
         {

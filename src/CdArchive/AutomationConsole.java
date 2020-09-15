@@ -12,7 +12,7 @@ public class AutomationConsole extends JFrame implements ActionListener, KeyList
 
     //<editor-fold desc="Variable Declaration">
     JLabel lblRequestedAction, lblBarCode, lblSection, lblArchiveCDs, lblMessage;
-    JButton btnProcess, btnExit, btnAdd;
+    JButton btnProcess, btnExit, btnAdd, btnConnect;
     JTextField txtBarCode, txtSection;
     JComboBox cmbRequestedAction;
     String[] dummyData = {"1", "2", "3", "4"};
@@ -64,6 +64,7 @@ public class AutomationConsole extends JFrame implements ActionListener, KeyList
         btnProcess = LibraryComponents.LocateAJButton(this, this, layout, "Process", 610, 30, 100, 20);
         btnAdd = LibraryComponents.LocateAJButton(this, this, layout, "Add item", 610, 55, 100, 20);
         btnExit = LibraryComponents.LocateAJButton(this, this, layout, "Exit", 690, 320, 80, 20);
+        btnConnect = LibraryComponents.LocateAJButton(this, this, layout, "Connect", 600, 320, 80, 20);
     }
 
     private void displayLables(SpringLayout layout)
@@ -312,7 +313,8 @@ public class AutomationConsole extends JFrame implements ActionListener, KeyList
     //<editor-fold desc="Action and Key Listeners">
     @Override
     public void actionPerformed(ActionEvent e) {
-
+        if(e.getSource() == btnConnect)
+            connect(serverName, serverPort);
     }
 
     @Override

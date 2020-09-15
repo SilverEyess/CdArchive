@@ -17,7 +17,7 @@ public class CdArchive extends JFrame implements ActionListener, KeyListener {
             lblBarcode, lblDescription, lblSortSection, lblActionRequest, lblLog, lblMessage;
     JButton btnSearch, btnSortByTitle, btnSortByAuthor, btnSortByBarcode, btnLog, btnPreorder, btnInOrder, btnPostOrder,
             btnGraphical, btnSave, btnDisplay, btnNewItem, btnSaveUpdate, btnRetrieve, btnRemove, btnReturn, btnAddToCollection,
-            btnRandomSort, btnMostlySort, btnReverseSort, btnExit;
+            btnRandomSort, btnMostlySort, btnReverseSort, btnExit, btnConnect;
     JCheckBox chkShowMsgLabels;
     JTable tblArchive;
     JPanel pnlTable, pnlLog, pnlInfo, pnlRobot;
@@ -95,7 +95,8 @@ public class CdArchive extends JFrame implements ActionListener, KeyListener {
         btnRandomSort = LibraryComponents.LocateAJButton(this, this, layout, "Random Collection Sort", 1000, 350, 170, 20);
         btnMostlySort = LibraryComponents.LocateAJButton(this, this, layout, "Mostly Sorted Sort", 1000, 375, 170, 20);
         btnReverseSort = LibraryComponents.LocateAJButton(this, this, layout, "Reverse Order Sort", 1000, 400, 170, 20);
-        btnExit = LibraryComponents.LocateAJButton(this, this, layout, "Exit", 900, 500, 300, 20);
+        btnExit = LibraryComponents.LocateAJButton(this, this, layout, "Exit", 1110, 500, 100, 20);
+        btnConnect = LibraryComponents.LocateAJButton(this, this, layout, "Connect",1000, 500, 100, 20);
     }
 
     private void displayLables(SpringLayout layout)
@@ -503,6 +504,8 @@ public class CdArchive extends JFrame implements ActionListener, KeyListener {
         if(e.getSource() == btnPreorder)
             PreOrderBinaryTree(dataValues);
 
+        if(e.getSource() == btnConnect)
+            connect(serverName, serverPort);
     }
     @Override
     public void keyTyped(KeyEvent e) {

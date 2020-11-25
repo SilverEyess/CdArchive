@@ -126,7 +126,7 @@ class DList
             return "List Empty";
         }
         str = "";
-        for (DLNode current = head; current != null; current = current.next)
+        for (DLNode current = head.next; current != head && current != null; current = current.next)
         {
             str = str + current.logOut + "\n";
         }

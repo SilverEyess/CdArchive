@@ -68,6 +68,16 @@ public class LibraryComponents
         return myJTextField;
     }
 
+    public static JScrollPane LocateATextArea(Frame myJFrame, SpringLayout myLayout, int x, int y, int w, int h)
+    {
+        JTextArea myJTextArea = new JTextArea(10, 100);
+        JScrollPane scrollPane = new JScrollPane(myJTextArea);
+        myJFrame.add(scrollPane);
+        myLayout.putConstraint(SpringLayout.WEST, scrollPane, 10, SpringLayout.WEST, myJFrame);
+        myLayout.putConstraint(SpringLayout.NORTH, scrollPane, 10, SpringLayout.NORTH, myJFrame);
+        return scrollPane;
+    }
+
 
     /** --------------------------------------------------------
      * Purpose: Locate a single JButton within a JFrame.

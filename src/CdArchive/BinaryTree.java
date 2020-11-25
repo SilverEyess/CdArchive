@@ -83,24 +83,19 @@ public class BinaryTree {
     // Recursion is used to go to one node and
     // then go to its child nodes and so forth
 
-    public void inOrderTraverseTree(BTNode focusNode) {
+    public String inOrderTraverseTree(BTNode focusNode) {
 
         if (focusNode != null) {
-
             // Traverse the left node
-
             inOrderTraverseTree(focusNode.leftChild);
-
             // Visit the currently focused on node
-
-            System.out.println(focusNode);
-
+            log += focusNode.name + ";" + focusNode.key + "\n";
+            //System.out.println(focusNode);
             // Traverse the right node
-
             inOrderTraverseTree(focusNode.rightChild);
 
         }
-
+        return log;
     }
 
     public String preorderTraverseTree(BTNode focusNode) {
